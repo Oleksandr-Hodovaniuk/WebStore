@@ -1,4 +1,4 @@
-﻿namespace Web_Store.Models.DTOs
+﻿namespace WebStore.Models.DTOs
 {
     public class ProductDTO
     {

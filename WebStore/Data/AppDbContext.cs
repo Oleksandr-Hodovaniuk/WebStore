@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mobileshop.Models;
 
-namespace Web_Store.Data
+namespace WebStore.Data
 {
     public class AppDbContext : DbContext
     {
