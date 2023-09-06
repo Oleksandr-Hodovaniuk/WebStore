@@ -10,7 +10,7 @@ namespace Web_Store.Data
         public DbSet<CartItem> CartItems { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
