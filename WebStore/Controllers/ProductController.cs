@@ -28,7 +28,7 @@ namespace WebStore.Controllers
             }
             catch (Exception ex) 
             {
-                Console.WriteLine(ex.Message);
+                BadRequest(ex.Message);
             }
 
             return BadRequest();
