@@ -5,6 +5,6 @@ namespace WebStore.Interfaces
 {
     public interface ILogInService
     {
-        Task<UserDTO> LogIn(LoInViewModel model);
+        Task<UserDTO> LogIn(LogInViewModel model);
     }
 }
