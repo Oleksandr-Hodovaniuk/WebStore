@@ -12,6 +12,9 @@ builder.Services.AddControllers();
 //Add IProductService.
 builder.Services.AddScoped<IProductService, ProductService>();
 
+//Add ILogInService
+builder.Services.AddScoped<ILogInService, LogInService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
