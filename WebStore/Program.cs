@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebStore.Data;
 using WebStore.Interfaces;
 using WebStore.Services;
+using WebStore.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,12 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 //Add ILogInService
 builder.Services.AddScoped<ILogInService, LogInService>();
+
+//Add IRegisterService.
+builder.Services.AddScoped<IRegisterService, RegisterService>();
+
+//Add validator for RegisterViewModel.
+builder.Services.AddScoped<RegisterViewModelValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
