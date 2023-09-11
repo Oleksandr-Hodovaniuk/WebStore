@@ -46,5 +46,20 @@ namespace WebStore.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //Add cart item to user's shoping cart.
+        [HttpPost("{userId}/{productId}")]
+        public async Task<IActionResult> AddCartItem(int userId, int productId)
+        {
+            try 
+            {
+                await cartService.AddCartItem(userId, productId);
+                return Ok("Product was added to shoping cart.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

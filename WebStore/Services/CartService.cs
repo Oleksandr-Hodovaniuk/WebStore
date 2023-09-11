@@ -66,5 +66,33 @@ namespace WebStore.Services
 
             await context.SaveChangesAsync();
         }
+
+        //Add cart item to user's shoping cart.
+        public async Task AddCartItem(int userId, int productId)
+        {
+            var cartItem = await context.CartItems.FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+
+            if (cartItem == null)
+            {
+                cartItem = new CartItem()
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    Quantity = 1
+                };
+
+                context.CartItems.Add(cartItem);
+
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                cartItem.Quantity++;
+
+                await context.SaveChangesAsync();
+            }
+
+            
+        }
     }
 }
