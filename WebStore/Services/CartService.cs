@@ -114,5 +114,20 @@ namespace WebStore.Services
                 return;
             }
         }
+
+        //Get total cart items price.
+        public async Task<int> GetTotalPrice(int userId)
+        {
+            var cartList = await context.CartItems.Include(c => c.Product).Where(c => c.UserId == userId).ToListAsync();
+
+            int prices = 0;
+
+            foreach (var cart in cartList)
+            {
+                prices += cart.Quantity * cart.Product.Price;
+            }
+
+            return prices;
+        }
     }
 }
