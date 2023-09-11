@@ -90,9 +90,29 @@ namespace WebStore.Services
                 cartItem.Quantity++;
 
                 await context.SaveChangesAsync();
-            }
+            }   
+        }
 
-            
+        //Delete one cart item from user's shoping cart.
+        public async Task DeleteCartItem(int userId, int productId)
+        {
+            var cartItem = await context.CartItems.FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+
+            if (cartItem != null && cartItem.Quantity > 1)
+            {
+                cartItem.Quantity--;
+
+                await context.SaveChangesAsync();
+            }
+            else if (cartItem.Quantity == 1)
+            {
+                context.CartItems.Remove(cartItem);
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

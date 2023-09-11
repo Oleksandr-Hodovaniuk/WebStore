@@ -32,7 +32,7 @@ namespace WebStore.Controllers
         }
 
         //Delete all the user's cart items.
-        [HttpDelete("{userId}")]
+        [HttpDelete("Delete/{userId}")]
         public async Task<IActionResult> DeleteUserCartItems(int userId)
         {
             try
@@ -48,7 +48,7 @@ namespace WebStore.Controllers
         }
 
         //Add cart item to user's shoping cart.
-        [HttpPost("{userId}/{productId}")]
+        [HttpPost("Add/{userId}/{productId}")]
         public async Task<IActionResult> AddCartItem(int userId, int productId)
         {
             try 
@@ -57,6 +57,22 @@ namespace WebStore.Controllers
                 return Ok("Product was added to shoping cart.");
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Delete cart item from user's shoping cart.
+        [HttpDelete("Delete/{userId}/{productId}")]
+        public async Task<IActionResult> DeleteCartItem(int userId, int productId)
+        {
+            try
+            {
+                await cartService.DeleteCartItem(userId, productId);
+
+                return Ok("Product was deleted from shoping cart.");
+            }
+            catch (Exception ex) 
             {
                 return BadRequest(ex.Message);
             }

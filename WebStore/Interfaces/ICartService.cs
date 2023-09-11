@@ -11,6 +11,9 @@ namespace WebStore.Interfaces
         Task DeleteUserCartItems(int userId);
 
         //Add cart item to user's shoping cart.
-        Task AddCartItem(int userId, int poductId);
+        Task AddCartItem(int userId, int productId);
+
+        //Delete one cart item from user's shoping cart.
+        Task DeleteCartItem(int userId, int productId);
     }
 }
