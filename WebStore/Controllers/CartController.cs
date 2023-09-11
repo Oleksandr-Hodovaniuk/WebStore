@@ -25,7 +25,23 @@ namespace WebStore.Controllers
             {
                 return Ok(await cartService.GetCartItems(userId));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Delete all the user's cart items.
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUserCartItems(int userId)
+        {
+            try
+            {
+                await cartService.DeleteUserCartItems(userId);
+
+                return Ok("User's cart was cleared.");
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -4,6 +4,10 @@ namespace WebStore.Interfaces
 {
     public interface ICartService
     {
-        Task<ICollection<CartItemDTO>> GetCartItems(int userId); 
+        //Get all the user's cart items.
+        Task<ICollection<CartItemDTO>> GetCartItems(int userId);
+
+        //Delete all the user's cart items.
+        Task DeleteUserCartItems(int userId);
     }
 }

@@ -56,5 +56,15 @@ namespace WebStore.Services
 
             return dto;
         }
+
+        //Delete all the user's cart items.
+        public async Task DeleteUserCartItems(int userId)
+        {
+            var cartItemToDelete = await context.CartItems.Where(c => c.UserId == userId).ToListAsync();
+
+            context.CartItems.RemoveRange(cartItemToDelete);
+
+            await context.SaveChangesAsync();
+        }
     }
 }
