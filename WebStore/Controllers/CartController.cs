@@ -77,5 +77,19 @@ namespace WebStore.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //Get total cart items price.
+        [HttpGet("Price/{userId}")]
+        public async Task<ActionResult<int>> GetTotalPrice(int userId)
+        {
+            try
+            {
+                return Ok(await cartService.GetTotalPrice(userId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

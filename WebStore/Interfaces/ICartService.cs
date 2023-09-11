@@ -15,5 +15,8 @@ namespace WebStore.Interfaces
 
         //Delete one cart item from user's shoping cart.
         Task DeleteCartItem(int userId, int productId);
+
+        //Get total cart items price.
+        Task<int> GetTotalPrice(int userId);
     }
 }
