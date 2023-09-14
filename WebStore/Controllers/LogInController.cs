@@ -28,7 +28,7 @@ namespace WebStore.Controllers
                 if (user != null)
                     return user;
 
-                return BadRequest("Incorrect data.");
+                return BadRequest("Incorrect username or password.");
             }
             catch (Exception ex) 
             {
