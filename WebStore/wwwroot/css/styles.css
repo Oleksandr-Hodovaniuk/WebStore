@@ -35,6 +35,8 @@
 
 .navBar
 {
+    display: flex;
+    align-items: center;
     margin-left: 950px;
 }
 
@@ -47,4 +49,12 @@
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.mainDiv
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    height: auto;
 }
