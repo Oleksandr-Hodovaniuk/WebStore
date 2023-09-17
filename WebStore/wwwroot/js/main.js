@@ -12,7 +12,7 @@ async function getAllProducts()
     if(responce.ok === true)
     {
         const productList = await responce.json();
-        
+
         productList.forEach(p => mainDiv.append(displayProduct(p)));
     }
 }
@@ -26,7 +26,7 @@ function displayProduct(data)
     verticalContainer.className = "verticalContainer";
 
     const image = document.createElement("img");
-    image.src = data.image;
+    image.src = "data:image/png;base64," + data.image;
     verticalContainer.append(image);
 
     const name = document.createElement("div");
