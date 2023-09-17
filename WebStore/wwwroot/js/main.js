@@ -1,4 +1,5 @@
 ﻿var mainDiv = document.getElementsByClassName("mainDiv")[0];
+var user = null;
 
 //Get all products from database.
 async function getAllProducts()
@@ -60,7 +61,7 @@ function displayProduct(data)
 }
 
 //Create registration form.
-function CreateRegistrationForm()
+async function CreateRegistrationForm()
 {
     const form = document.createElement("div");
     form.id = "regForm";
@@ -71,6 +72,7 @@ function CreateRegistrationForm()
     var label = document.createElement("label");
     label.innerText = "Name"
     var input = document.createElement("input");
+    input.id = "name";
     var span = document.createElement("span");
     span.id = "Name";
     div.append(label, input, span);
@@ -81,6 +83,7 @@ function CreateRegistrationForm()
     label = document.createElement("label");
     label.innerText = "Email";
     input = document.createElement("input");
+    input.id = "email";
     span = document.createElement("span");
     span.id = "Email";
     div.append(label, input, span);
@@ -91,6 +94,7 @@ function CreateRegistrationForm()
     label = document.createElement("label");
     label.innerText = "Password";
     input = document.createElement("input");
+    input.id = "password";
     input.type = "password";
     span = document.createElement("span");
     span.id = "Password";
@@ -102,6 +106,7 @@ function CreateRegistrationForm()
     label = document.createElement("label");
     label.innerText = "Confirm Password";
     input = document.createElement("input");
+    input.id = "confirmPassword";
     input.type = "password";
     span = document.createElement("span");
     span.id = "ConfirmPassword";
@@ -116,12 +121,72 @@ function CreateRegistrationForm()
     const submit = document.createElement("button");
     submit.innerText = "Submit";
     submit.className = "submitBtn"
+    submit.addEventListener("click", callRegisterForm);
+
     div.append(login, submit);
     form.append(div);
 
     mainDiv.append(form);
 }
 
+//Register a new user.
+async function RegisterUser(userName, userEmail, userPassword, userConfirmPassword)
+{
+    const responce = await fetch("/api/Register", 
+    {
+        method: "POST",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+            confirmPassword: userConfirmPassword
+        })
+    });
+
+    if(responce.ok === true)
+    {
+        user = await responce.json();
+
+        mainDiv.removeChild(document.getElementById("regForm"));
+    }
+    else if(responce.status === 400)
+    {
+        const errors = await responce.json();
+
+        const spanList = document.querySelectorAll("span");
+        
+        spanList.forEach(s => {
+            s.innerText = "";
+            s.previousElementSibling.style.borderColor = "black";
+        });
+
+        errors.forEach(e => {
+            
+            var prop = JSON.stringify(e.propertyName);
+            prop = prop.replace(/["']/g, '');
+            
+            var msg = JSON.stringify(e.errorMessage);
+            msg = msg.replace(/["']/g, '');
+
+            var span = document.getElementById(prop);
+            span.innerText = msg;
+            span.style.color = "red";
+        });
+    }
+}
+
+//Get values from registration form and call registerUser method.
+async function callRegisterForm()
+{
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const conformPassword = document.getElementById("confirmPassword").value;
+
+    await RegisterUser(name, email, password, conformPassword);
+}
+
 CreateRegistrationForm();
 
-getAllProducts();
+//getAllProducts();
