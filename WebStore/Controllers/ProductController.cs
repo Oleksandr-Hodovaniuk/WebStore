@@ -28,10 +28,8 @@ namespace WebStore.Controllers
             }
             catch (Exception ex) 
             {
-                BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
-
-            return BadRequest();
         }
     }
 }

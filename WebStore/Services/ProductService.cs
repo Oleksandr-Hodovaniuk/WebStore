@@ -40,7 +40,7 @@ namespace WebStore.Services
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                Image = product.Image
+                Image = Convert.ToBase64String(product.Image)
             };
 
             return dto;

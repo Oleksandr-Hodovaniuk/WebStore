@@ -12,7 +12,7 @@ async function getAllProducts()
     if(responce.ok === true)
     {
         const productList = await responce.json();
-
+        
         productList.forEach(p => mainDiv.append(displayProduct(p)));
     }
 }
