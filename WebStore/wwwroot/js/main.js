@@ -124,4 +124,4 @@ function CreateRegistrationForm()
 
 CreateRegistrationForm();
 
-getAllProducts();
+//getAllProducts();
