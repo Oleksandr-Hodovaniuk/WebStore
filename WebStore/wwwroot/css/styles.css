@@ -138,4 +138,58 @@
     justify-content: space-evenly;
 }
 
+.formDiv
+{
+    border: 2px solid #13276A;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #13276A;
+}
+
+.formGroup
+{
+    display: block;
+    margin-bottom: 20px;
+}
+
+label
+{
+    display: block;
+    margin-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+input
+{
+    border-radius: 5px;
+    height: 25px;
+    font-size: 14px;
+    border: none;
+}
+
+.loginBtn
+{
+    border-radius: 10px;
+    border: none;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: yellow;
+}
+
+.submitBtn
+{
+    border-radius: 10px;
+    border: none;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: chartreuse;
+    margin-left: 75px;
+}
+
 

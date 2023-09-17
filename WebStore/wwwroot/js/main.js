@@ -59,4 +59,69 @@ function displayProduct(data)
     return product;
 }
 
+//Create registration form.
+function CreateRegistrationForm()
+{
+    const form = document.createElement("div");
+    form.id = "regForm";
+    form.className = "formDiv";
+
+    var div = document.createElement("div");
+    div.className = "formGroup";
+    var label = document.createElement("label");
+    label.innerText = "Name"
+    var input = document.createElement("input");
+    var span = document.createElement("span");
+    span.id = "Name";
+    div.append(label, input, span);
+    form.append(div);
+
+    div = document.createElement("div");
+    div.className = "formGroup";
+    label = document.createElement("label");
+    label.innerText = "Email";
+    input = document.createElement("input");
+    span = document.createElement("span");
+    span.id = "Email";
+    div.append(label, input, span);
+    form.append(div);
+
+    div = document.createElement("div");
+    div.className = "formGroup";
+    label = document.createElement("label");
+    label.innerText = "Password";
+    input = document.createElement("input");
+    input.type = "password";
+    span = document.createElement("span");
+    span.id = "Password";
+    div.append(label, input, span);
+    form.append(div);
+
+    div = document.createElement("div");
+    div.className = "formGroup";
+    label = document.createElement("label");
+    label.innerText = "Confirm Password";
+    input = document.createElement("input");
+    input.type = "password";
+    span = document.createElement("span");
+    span.id = "ConfirmPassword";
+    div.append(label, input, span);
+    form.append(div);
+
+    div = document.createElement("div");
+    const login = document.createElement("button");
+    login.innerText = "Log in";
+    login.className = "loginBtn"
+
+    const submit = document.createElement("button");
+    submit.innerText = "Submit";
+    submit.className = "submitBtn"
+    div.append(login, submit);
+    form.append(div);
+
+    mainDiv.append(form);
+}
+
+CreateRegistrationForm();
+
 getAllProducts();
