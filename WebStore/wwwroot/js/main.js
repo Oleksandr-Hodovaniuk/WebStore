@@ -148,6 +148,8 @@ async function RegisterUser(userName, userEmail, userPassword, userConfirmPasswo
     {
         user = await responce.json();
 
+        createModalWindow("You was successfully registered.");
+
         mainDiv.removeChild(document.getElementById("regForm"));
     }
     else if(responce.status === 400)
@@ -185,6 +187,52 @@ async function callRegisterForm()
     const conformPassword = document.getElementById("confirmPassword").value;
 
     await RegisterUser(name, email, password, conformPassword);
+}
+
+//Create modal window.
+function createModalWindow(text)
+{
+    const modal = document.createElement("div");
+    modal.className = "modal";
+
+    const modalContent = document.createElement("div");
+    modalContent.className = "modalContent";
+
+    const span = document.createElement("span");
+    span.className = "close";
+    span.innerHTML = "&times";
+
+    const p = document.createElement("p");
+    p.className = "modalP";
+    p.innerText = text;
+
+    const btn = document.createElement("button");
+    btn.id = "okButton";
+    btn.innerText = "Ok";
+
+    modalContent.append(span, p, btn);
+    modal.append(modalContent);
+    mainDiv.append(modal);
+
+    modal.style.display = "block";
+      
+    span.onclick = function() 
+    {
+        modal.style.display = "none";
+    }
+      
+    btn.onclick = function() 
+    {
+        modal.style.display = "none";
+    }
+      
+    window.onclick = function(event) 
+    {
+        if (event.target === modal) 
+        {
+            modal.style.display = "none";
+        }
+    }
 }
 
 CreateRegistrationForm();
