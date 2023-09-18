@@ -148,7 +148,7 @@ async function RegisterUser(userName, userEmail, userPassword, userConfirmPasswo
     {
         user = await responce.json();
 
-        createModalWindow("You was successfully registered.");
+        createModalWindow("You was successfully registered");
 
         mainDiv.removeChild(document.getElementById("regForm"));
     }
@@ -235,6 +235,6 @@ function createModalWindow(text)
     }
 }
 
-CreateRegistrationForm();
+//CreateRegistrationForm();
 
 //getAllProducts();
