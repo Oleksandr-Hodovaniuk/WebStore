@@ -93,6 +93,7 @@ async function CreateRegistrationForm()
     label.innerText = "Name"
     var input = document.createElement("input");
     input.id = "name";
+    input.className = "inputReg";
     var span = document.createElement("span");
     span.id = "Name";
     div.append(label, input, span);
@@ -104,6 +105,7 @@ async function CreateRegistrationForm()
     label.innerText = "Email";
     input = document.createElement("input");
     input.id = "email";
+    input.className = "inputReg";
     span = document.createElement("span");
     span.id = "Email";
     div.append(label, input, span);
@@ -115,6 +117,7 @@ async function CreateRegistrationForm()
     label.innerText = "Password";
     input = document.createElement("input");
     input.id = "password";
+    input.className = "inputReg";
     input.type = "password";
     span = document.createElement("span");
     span.id = "Password";
@@ -127,6 +130,7 @@ async function CreateRegistrationForm()
     label.innerText = "Confirm Password";
     input = document.createElement("input");
     input.id = "confirmPassword";
+    input.className = "inputReg";
     input.type = "password";
     span = document.createElement("span");
     span.id = "ConfirmPassword";
@@ -196,7 +200,7 @@ async function RegisterUser(userName, userEmail, userPassword, userConfirmPasswo
 
             var span = document.getElementById(prop);
             span.innerText = msg;
-            span.style.color = "red";
+            span.className = "regSpan";
         });
     }
 }
@@ -270,7 +274,7 @@ function displayUserData(user)
     userDiv.className = "userDiv";
 
     var horizontalContainer = document.createElement("div");
-    horizontalContainer.className = "horizontalContainer";
+    horizontalContainer.className = "userProfileConteiner";
 
     const userProfile = document.createElement("div");
     userProfile.innerText = "User profile";
@@ -332,6 +336,7 @@ function createLogInForm()
     label.innerText = "Name"
     var input = document.createElement("input");
     input.id = "name";
+    input.className = "inputLog"
     div.append(label, input);
     form.append(div);
 
@@ -341,12 +346,15 @@ function createLogInForm()
     label.innerText = "Password"
     input = document.createElement("input");
     input.id = "password";
+    input.className = "inputLog"
+    input.type = "password";
     div.append(label, input);
     form.append(div);
 
     div = document.createElement("div");
     const span = document.createElement("span");
     span.className = "logSpan";
+    span.id = "error";
     div.append(span);
     form.append(div); 
 
@@ -359,7 +367,7 @@ function createLogInForm()
     const submit = document.createElement("button");
     submit.innerText = "Submit";
     submit.className = "submitBtn"
-    submit.addEventListener("click", callRegisterForm);
+    submit.addEventListener("click", callLogInForm);
 
     div.append(signUp, submit);
     form.append(div);
@@ -367,6 +375,52 @@ function createLogInForm()
     mainDiv.append(form);
 }
 
-createLogInForm();
+//Log in fucntion.
+async function logInUser(userName, userPassword)
+{
+    const responce = await fetch("/api/LogIn", 
+    {
+        method: "POST",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: userName,
+            password: userPassword
+        })
+    });
+
+    if(responce.ok === true)
+    {
+        user = await responce.json();
+
+        while (mainDiv.firstChild) 
+        {
+            mainDiv.removeChild(mainDiv.firstChild);
+        }
+
+        displayUserData(user);
+
+        createModalWindow("You was successfully logged in");
+    }
+    else if(responce.status === 400)
+    {
+        const text = await responce.json();
+
+        const errorElement = document.getElementById("error");
+        
+        errorElement.innerText = text;
+    }
+}
+
+//Get values from log in form and call lgoInUser method.
+async function callLogInForm()
+{
+    const name = document.getElementById("name").value;
+    const password = document.getElementById("password").value;
+
+    await logInUser(name, password);
+}
+
+
+//createLogInForm();
 
 //getAllProducts();
