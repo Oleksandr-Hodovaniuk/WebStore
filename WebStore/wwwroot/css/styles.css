@@ -161,12 +161,28 @@ label
     color: white;
 }
 
-input
+.inputReg
 {
     border-radius: 5px;
     height: 25px;
     font-size: 14px;
     border: none;
+}
+
+.inputLog
+{
+    border-radius: 5px;
+    height: 25px;
+    font-size: 14px;
+    border: none;
+    width: 100%;
+}
+
+.regSpan
+{   
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+    color: red;
 }
 
 .loginBtn
@@ -285,8 +301,15 @@ input
 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: larger;
-    margin-left: 70px;
+    text-align: center;
     margin-bottom: 20px;
+}
+
+.userProfileConteiner
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .logSpan
