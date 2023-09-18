@@ -148,9 +148,11 @@ async function RegisterUser(userName, userEmail, userPassword, userConfirmPasswo
     {
         user = await responce.json();
 
-        createModalWindow("You was successfully registered");
-
         mainDiv.removeChild(document.getElementById("regForm"));
+
+        displayUserData(user);
+
+        createModalWindow("You was successfully registered");
     }
     else if(responce.status === 400)
     {
@@ -233,6 +235,62 @@ function createModalWindow(text)
             modal.style.display = "none";
         }
     }
+}
+
+//Dispaly user's data.
+function displayUserData(user)
+{
+    while (mainDiv.firstChild) 
+    {
+        mainDiv.removeChild(mainDiv.firstChild);
+    }
+
+    const userDiv = document.createElement("div");
+    userDiv.className = "userDiv";
+
+    var horizontalContainer = document.createElement("div");
+    horizontalContainer.className = "horizontalContainer";
+
+    const userProfile = document.createElement("div");
+    userProfile.innerText = "User profile";
+    userProfile.className = "userProfile";
+    horizontalContainer.append(userProfile);
+    userDiv.append(horizontalContainer);
+
+    horizontalContainer = document.createElement("div");
+    horizontalContainer.className = "horizontalContainer";
+    var span = document.createElement("span");
+    span.innerText = "Id: ";
+    span.className = "userSpan";
+    const userId = document.createElement("div");
+    userId.innerText = user.id;
+    userId.className = "userFieldDiv";
+    horizontalContainer.append(span, userId);
+    userDiv.append(horizontalContainer);
+
+    horizontalContainer = document.createElement("div");
+    horizontalContainer.className = "horizontalContainer";
+    span = document.createElement("span");
+    span.innerText = "Name: ";
+    span.className = "userSpan";
+    const userName = document.createElement("div");
+    userName.innerText = user.name;
+    userName.className = "userFieldDiv";
+    horizontalContainer.append(span, userName);
+    userDiv.append(horizontalContainer);
+
+    horizontalContainer = document.createElement("div");
+    horizontalContainer.className = "horizontalContainer";
+    span = document.createElement("span");
+    span.innerText = "Email: ";
+    span.className = "userSpan";
+    const userEmail = document.createElement("div");
+    userEmail.innerText = user.email;
+    userEmail.className = "userFieldDiv";
+    horizontalContainer.append(span, userEmail);
+    userDiv.append(horizontalContainer);
+
+    mainDiv.append(userDiv);
 }
 
 //CreateRegistrationForm();
