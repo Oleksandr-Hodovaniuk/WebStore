@@ -4,8 +4,12 @@ var user = null;
 var signUpBtn = document.getElementById("signUpBtn");
 signUpBtn.addEventListener("click", CreateRegistrationForm);
 
+var logInBtn = document.getElementById("logInBtn");
+logInBtn.addEventListener("click", createLogInForm);
+
 const logo = document.getElementById("logo");
 logo.addEventListener("click", getAllProducts);
+
 
 //Get all products from database.
 async function getAllProducts()
@@ -133,6 +137,7 @@ async function CreateRegistrationForm()
     const login = document.createElement("button");
     login.innerText = "Log in";
     login.className = "loginBtn"
+    login.addEventListener("click", createLogInForm);
 
     const submit = document.createElement("button");
     submit.innerText = "Submit";
@@ -309,4 +314,59 @@ function displayUserData(user)
     mainDiv.append(userDiv);
 }
 
-getAllProducts();
+//Create log in form.
+function createLogInForm()
+{
+    while (mainDiv.firstChild) 
+    {
+        mainDiv.removeChild(mainDiv.firstChild);
+    }
+
+    const form = document.createElement("div");
+    form.id = "logForm";
+    form.className = "formDiv";
+
+    var div = document.createElement("div");
+    div.className = "formGroup";
+    var label = document.createElement("label");
+    label.innerText = "Name"
+    var input = document.createElement("input");
+    input.id = "name";
+    div.append(label, input);
+    form.append(div);
+
+    div = document.createElement("div");
+    div.className = "formGroup";
+    label = document.createElement("label");
+    label.innerText = "Password"
+    input = document.createElement("input");
+    input.id = "password";
+    div.append(label, input);
+    form.append(div);
+
+    div = document.createElement("div");
+    const span = document.createElement("span");
+    span.className = "logSpan";
+    div.append(span);
+    form.append(div); 
+
+    div = document.createElement("div");
+    const signUp = document.createElement("button");
+    signUp.innerText = "Sign up";
+    signUp.className = "loginBtn"
+    signUp.addEventListener("click", CreateRegistrationForm);
+
+    const submit = document.createElement("button");
+    submit.innerText = "Submit";
+    submit.className = "submitBtn"
+    submit.addEventListener("click", callRegisterForm);
+
+    div.append(signUp, submit);
+    form.append(div);
+
+    mainDiv.append(form);
+}
+
+createLogInForm();
+
+//getAllProducts();
