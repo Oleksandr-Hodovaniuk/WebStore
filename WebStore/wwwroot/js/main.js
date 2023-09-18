@@ -1,6 +1,12 @@
 ﻿var mainDiv = document.getElementsByClassName("mainDiv")[0];
 var user = null;
 
+var signUpBtn = document.getElementById("signUpBtn");
+signUpBtn.addEventListener("click", CreateRegistrationForm);
+
+const logo = document.getElementById("logo");
+logo.addEventListener("click", getAllProducts);
+
 //Get all products from database.
 async function getAllProducts()
 {
@@ -12,6 +18,11 @@ async function getAllProducts()
 
     if(responce.ok === true)
     {
+        while (mainDiv.firstChild) 
+        {
+            mainDiv.removeChild(mainDiv.firstChild);
+        }
+
         const productList = await responce.json();
 
         productList.forEach(p => mainDiv.append(displayProduct(p)));
@@ -63,6 +74,11 @@ function displayProduct(data)
 //Create registration form.
 async function CreateRegistrationForm()
 {
+    while (mainDiv.firstChild) 
+    {
+        mainDiv.removeChild(mainDiv.firstChild);
+    }
+    
     const form = document.createElement("div");
     form.id = "regForm";
     form.className = "formDiv";
@@ -293,6 +309,4 @@ function displayUserData(user)
     mainDiv.append(userDiv);
 }
 
-//CreateRegistrationForm();
-
-//getAllProducts();
+getAllProducts();
