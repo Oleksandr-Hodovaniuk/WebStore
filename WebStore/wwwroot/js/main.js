@@ -10,7 +10,6 @@ logInBtn.addEventListener("click", createLogInForm);
 const logo = document.getElementById("logo");
 logo.addEventListener("click", getAllProducts);
 
-
 //Get all products from database.
 async function getAllProducts()
 {
@@ -399,6 +398,8 @@ async function logInUser(userName, userPassword)
 
         displayUserData(user);
 
+        addProfile();
+
         createModalWindow("You was successfully logged in");
     }
     else if(responce.status === 400)
@@ -421,6 +422,35 @@ async function callLogInForm()
 }
 
 
-//createLogInForm();
+//Change navigation bar elements.
+function addProfile()
+{
+    var navElements = document.getElementsByClassName("navElement");
+    navElements[1].remove();
+    navElements[1].remove();
 
-//getAllProducts();
+    const logOut = document.createElement("a");
+    logOut.className = "navElement";
+    logOut.innerText = "Log out";
+    logOut.title = "Log out";
+
+    var navBar = document.getElementById("navBar");
+    navBar.append(logOut);
+        
+    const userProfile = document.createElement("img");
+    userProfile.className = "navElement";
+    userProfile.src = "https://localhost:7273/api/Image/user.png";
+    userProfile.alt = "User profile";
+    userProfile.id = "userProfile";
+    userProfile.title = "Profile";
+    userProfile.addEventListener("click", callDisplayUserData);
+        
+    navBar.append(userProfile);
+}
+
+function callDisplayUserData()
+{
+    displayUserData(user);
+}
+
+getAllProducts();
