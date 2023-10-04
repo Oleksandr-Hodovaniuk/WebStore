@@ -429,13 +429,14 @@ function addProfile()
     navElements[1].remove();
     navElements[1].remove();
 
-    const logOut = document.createElement("a");
-    logOut.className = "navElement";
-    logOut.innerText = "Log out";
-    logOut.title = "Log out";
+    const logOutt = document.createElement("a");
+    logOutt.className = "navElement";
+    logOutt.innerText = "Log out";
+    logOutt.title = "Log out";
+    logOutt.addEventListener("click", logOut);
 
     var navBar = document.getElementById("navBar");
-    navBar.append(logOut);
+    navBar.append(logOutt);
         
     const userProfile = document.createElement("img");
     userProfile.className = "navElement";
@@ -451,6 +452,36 @@ function addProfile()
 function callDisplayUserData()
 {
     displayUserData(user);
+}
+
+//Log out function.
+function logOut()
+{
+    user = null;
+
+    var navElements = document.getElementsByClassName("navElement");
+    navElements[1].remove();
+    navElements[1].remove();
+    
+    var navBar = document.getElementById("navBar");
+
+    const logIn = document.createElement("a");
+    logIn.className = "navElement";
+    logIn.Id = "logInBtn";
+    logIn.title = "Log in";
+    logIn.innerText = "Log in";
+    logIn.addEventListener("click", createLogInForm);
+
+    const signUp = document.createElement("a");
+    signUp.className = "navElement";
+    signUp.id = "signUpBtn";
+    signUp.title = "Sign up";
+    signUp.innerText = "Sign up";
+    signUp.addEventListener("click", CreateRegistrationForm);
+
+    navBar.append(logIn, signUp);
+
+    getAllProducts();
 }
 
 getAllProducts();
