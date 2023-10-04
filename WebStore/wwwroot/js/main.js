@@ -174,7 +174,9 @@ async function RegisterUser(userName, userEmail, userPassword, userConfirmPasswo
 
         mainDiv.removeChild(document.getElementById("regForm"));
 
-        displayUserData(user);
+        await getAllProducts();
+
+        addProfile();
 
         createModalWindow("You was successfully registered");
     }
@@ -396,7 +398,7 @@ async function logInUser(userName, userPassword)
             mainDiv.removeChild(mainDiv.firstChild);
         }
 
-        displayUserData(user);
+        await getAllProducts();
 
         addProfile();
 
