@@ -18,7 +18,7 @@ namespace WebStore.Controllers
         }
 
         //Get the user's products.
-        [HttpGet]
+        [HttpGet("Get/{userId}")]
         public async Task<ActionResult<ICollection<CartItemDTO>>> GetCartItems(int userId)
         {
             try
