@@ -10,7 +10,6 @@ logInBtn.addEventListener("click", createLogInForm);
 const logo = document.getElementById("logo");
 logo.addEventListener("click", getAllProducts);
 
-
 //Get all products from database.
 async function getAllProducts()
 {
@@ -399,6 +398,8 @@ async function logInUser(userName, userPassword)
 
         displayUserData(user);
 
+        addProfile();
+
         createModalWindow("You was successfully logged in");
     }
     else if(responce.status === 400)
@@ -421,6 +422,66 @@ async function callLogInForm()
 }
 
 
-//createLogInForm();
+//Change navigation bar elements.
+function addProfile()
+{
+    var navElements = document.getElementsByClassName("navElement");
+    navElements[1].remove();
+    navElements[1].remove();
 
-//getAllProducts();
+    const logOutt = document.createElement("a");
+    logOutt.className = "navElement";
+    logOutt.innerText = "Log out";
+    logOutt.title = "Log out";
+    logOutt.addEventListener("click", logOut);
+
+    var navBar = document.getElementById("navBar");
+    navBar.append(logOutt);
+        
+    const userProfile = document.createElement("img");
+    userProfile.className = "navElement";
+    userProfile.src = "https://localhost:7273/api/Image/user.png";
+    userProfile.alt = "User profile";
+    userProfile.id = "userProfile";
+    userProfile.title = "Profile";
+    userProfile.addEventListener("click", callDisplayUserData);
+        
+    navBar.append(userProfile);
+}
+
+function callDisplayUserData()
+{
+    displayUserData(user);
+}
+
+//Log out function.
+function logOut()
+{
+    user = null;
+
+    var navElements = document.getElementsByClassName("navElement");
+    navElements[1].remove();
+    navElements[1].remove();
+    
+    var navBar = document.getElementById("navBar");
+
+    const logIn = document.createElement("a");
+    logIn.className = "navElement";
+    logIn.Id = "logInBtn";
+    logIn.title = "Log in";
+    logIn.innerText = "Log in";
+    logIn.addEventListener("click", createLogInForm);
+
+    const signUp = document.createElement("a");
+    signUp.className = "navElement";
+    signUp.id = "signUpBtn";
+    signUp.title = "Sign up";
+    signUp.innerText = "Sign up";
+    signUp.addEventListener("click", CreateRegistrationForm);
+
+    navBar.append(logIn, signUp);
+
+    getAllProducts();
+}
+
+getAllProducts();
