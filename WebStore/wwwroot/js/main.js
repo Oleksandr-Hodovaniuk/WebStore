@@ -10,6 +10,8 @@ logInBtn.addEventListener("click", createLogInForm);
 const logo = document.getElementById("logo");
 logo.addEventListener("click", getAllProducts);
 
+var flag = true;
+
 //Get all products from database.
 async function getAllProducts()
 {
@@ -27,6 +29,8 @@ async function getAllProducts()
         }
 
         const productList = await responce.json();
+
+        mainDiv.className = "mainDiv";
 
         productList.forEach(p => mainDiv.append(displayProduct(p)));
     }
@@ -81,7 +85,9 @@ async function CreateRegistrationForm()
     {
         mainDiv.removeChild(mainDiv.firstChild);
     }
-    
+
+    mainDiv.className = "mainDiv";
+
     const form = document.createElement("div");
     form.id = "regForm";
     form.className = "formDiv";
@@ -271,6 +277,8 @@ function displayUserData(user)
         mainDiv.removeChild(mainDiv.firstChild);
     }
 
+    mainDiv.className = "mainDiv";
+
     const userDiv = document.createElement("div");
     userDiv.className = "userDiv";
 
@@ -326,6 +334,8 @@ function createLogInForm()
     {
         mainDiv.removeChild(mainDiv.firstChild);
     }
+
+    mainDiv.className = "mainDiv"; 
 
     const form = document.createElement("div");
     form.id = "logForm";
@@ -484,4 +494,152 @@ function logOut()
     getAllProducts();
 }
 
-getAllProducts();
+//Display user's cart.
+async function displayUserCart(userId)
+{
+    const responce = await fetch(`/api/Cart/Get/${userId}`,
+    {
+        method: "GET",
+        headers: {"Accept": "application/json"}
+    });
+
+    if(responce.ok === true)
+    {
+        const cart = await responce.json();
+        console.log(cart);
+
+        while (mainDiv.firstChild) 
+        {
+            mainDiv.removeChild(mainDiv.firstChild);
+        }
+
+        mainDiv.className = "mainDiv2";
+
+        cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
+    }
+    else
+    {
+        console.log("Error!");       
+    }
+}
+
+//Display cart`s product.
+function displayCartProduct(data)
+{
+    const cartItem = document.createElement("div");
+    cartItem.className = "cartItem";
+
+    const product = document.createElement("div");
+    product.className = "product2";
+
+    const verticalContainer = document.createElement("div");
+    verticalContainer.className = "verticalContainer";
+
+    const image = document.createElement("img");
+    image.src = "data:image/png;base64," + data.product.image;
+    image.className = "image2";
+    verticalContainer.append(image);
+
+    const name = document.createElement("div");
+    name.innerText = data.product.name;
+    name.className = "name2";
+    verticalContainer.append(name);
+
+    const description = document.createElement("div");
+    description.innerText = data.product.description;
+    description.className = "description2";
+    verticalContainer.append(description);
+
+    const price = document.createElement("div");
+    price.innerText = data.product.price + " ₴";
+    price.className = "price2";
+    verticalContainer.append(price);
+    product.append(verticalContainer);
+
+    const productFunc = document.createElement("div");
+    productFunc.className = "productFunc";
+
+    var buttons = document.createElement("div");
+    
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "checkbox"
+    checkbox.title = "Confirm the purchase of the product";
+
+    const removeButton = document.createElement("button");
+    removeButton.className = "removeBtn";
+    removeButton.innerText = "-";
+    removeButton.title = "Reduce the quantity of the product";
+
+    const quantity = document.createElement("span");
+    quantity.innerText = data.quantity;
+    quantity.className = "quantity";
+
+    const addButton = document.createElement("button");
+    addButton.className = "addBtn";
+    addButton.innerText = "+";
+    addButton.title = "Increase the quantity of the product";
+
+    
+
+    buttons.append(checkbox, removeButton, quantity, addButton);
+    productFunc.append(buttons);
+    cartItem.append(product,productFunc);
+    if(flag == true)
+    {
+        const cartFunc = document.createElement("div");
+        cartFunc.className = "cartFunc";
+
+        const cartPrice = document.createElement("div");
+        cartPrice.innerText = "Cart price: 12341";
+        cartPrice.className = "cartFuncPrice";
+
+        const purchasePrice = document.createElement("div");
+        purchasePrice.innerText = "Purchase price: 5678";
+        purchasePrice.className = "cartFuncPrice";
+
+        cartFunc.append(cartPrice, purchasePrice);
+        cartItem.append(cartFunc);
+
+        var btnsDiv = document.createElement("div");
+        btnsDiv.className = "btnsDiv";
+        var btn = document.createElement("button");
+        btn.className = "cartFuncBtn";
+        btn.innerText = "Clear the cart";
+        btnsDiv.append(btn);
+        cartFunc.append(btnsDiv);
+
+        btnsDiv = document.createElement("div");
+        btnsDiv.className = "btnsDiv";
+        var btn = document.createElement("button");
+        btn.className = "cartFuncBtn";
+        btn.innerText = "Reset all products";
+        btnsDiv.append(btn);
+        cartFunc.append(btnsDiv);
+
+        btnsDiv = document.createElement("div");
+        btnsDiv.className = "btnsDiv";
+        var btn = document.createElement("button");
+        btn.className = "cartFuncBtn";
+        btn.innerText = "Select all products";
+        btnsDiv.append(btn);
+        cartFunc.append(btnsDiv);
+
+        btnsDiv = document.createElement("div");
+        btnsDiv.className = "buyDiv";
+        var btn = document.createElement("button");
+        btn.className = "buyBtn";
+        btn.innerText = "Buy selected products";
+        btnsDiv.append(btn);
+        cartFunc.append(btnsDiv);
+
+        
+        flag = false;
+    }
+
+    return cartItem; 
+}
+
+displayUserCart(2);
+
+//getAllProducts();

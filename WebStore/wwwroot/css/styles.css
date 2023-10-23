@@ -6,6 +6,7 @@
 
 .head
 {
+    z-index: 1;
     position: fixed;
     top: 0;
     width: 100%;
@@ -320,4 +321,172 @@ label
     color: red;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.mainDiv2
+{
+    display: block;
+    margin-top: 75px;
+}
+
+.product2
+{   opacity: 0.5;
+    background-color: rgba(198, 198, 198);
+    width: 300px;
+    border: 2px solid #13276A;
+    border-radius: 10px;
+}
+
+.product2Checkbox
+{
+    opacity: 1;
+    background-color: white;
+    width: 300px;
+    border: 2px solid #13276A;
+    border-radius: 10px;
+}
+
+.image2
+{
+    height: 80px;
+    margin-top: 5px;
+}
+
+.name2
+{   
+    font-size: 10px;
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.description2
+{   
+    font-size: 10px;
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.price2
+{
+    font-size: 10px;
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
   
+.cartItem
+{
+    margin-top: 10px;
+    display: flex;
+    margin-left: 25%;
+}
+
+.productFunc
+{
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    width: auto;
+    height: auto;
+}
+
+.checkbox
+{
+    width: 30px;
+    height: 30px;
+}
+
+.removeBtn
+{
+    width: 40px;
+    height: 40px;
+    border: 2px solid #13276A;
+    border-radius: 6px;
+    margin-left: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    color: red;
+}
+
+.addBtn
+{
+    width: 40px;
+    height: 40px;
+    border: 2px solid #13276A;
+    border-radius: 6px;
+    margin-left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: green;
+}
+
+.quantity
+{
+    font-size: 28px;
+    color: black;
+    margin-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cartFunc
+{
+    z-index: 1;
+    position: fixed;
+    right: 200px;
+    background-color: #13276A;
+    border: 2px solid #13276A;
+    border-radius: 6px;
+    height: auto;
+    width: auto;
+    padding: 20px;
+}
+
+.cartFuncPrice
+{   
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: white;
+}
+
+.btnsDiv
+{
+    margin-top: 10px;
+    width: auto;
+}
+
+.cartFuncBtn
+{
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: rgb(212, 88, 113);
+}
+
+.buyDiv
+{
+    margin-top: 20px;
+    width: auto;
+}
+
+.buyBtn
+{
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    background-color:green;
+    color: white;
+}
