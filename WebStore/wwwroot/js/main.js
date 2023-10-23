@@ -431,15 +431,6 @@ function addProfile()
     navElements[1].remove();
     navElements[1].remove();
 
-    const logOutt = document.createElement("a");
-    logOutt.className = "navElement";
-    logOutt.innerText = "Log out";
-    logOutt.title = "Log out";
-    logOutt.addEventListener("click", logOut);
-
-    var navBar = document.getElementById("navBar");
-    navBar.append(logOutt);
-        
     const userProfile = document.createElement("img");
     userProfile.className = "navElement";
     userProfile.src = "https://localhost:7273/api/Image/user.png";
@@ -447,8 +438,15 @@ function addProfile()
     userProfile.id = "userProfile";
     userProfile.title = "Profile";
     userProfile.addEventListener("click", callDisplayUserData);
-        
+    var navBar = document.getElementById("navBar");
     navBar.append(userProfile);
+
+    const logOutt = document.createElement("a");
+    logOutt.className = "navElement";
+    logOutt.innerText = "Log out";
+    logOutt.title = "Log out";
+    logOutt.addEventListener("click", logOut);
+    navBar.append(logOutt);
 }
 
 function callDisplayUserData()
