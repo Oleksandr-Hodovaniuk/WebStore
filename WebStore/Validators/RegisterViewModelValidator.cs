@@ -21,7 +21,7 @@ namespace WebStore.Validators
                 .NotNull()
                 .NotEmpty()
                 .Length(16, 40)
-                .Matches(@"^\w+@gmail\.com$")
+                .Matches(@"^\w+(\.\w+)?@gmail\.com$")
                 .WithMessage("Must consist of @gmail.com at the end, Only letters, digits, and underscore are allowed.");
 
             RuleFor(u => u.Password)
