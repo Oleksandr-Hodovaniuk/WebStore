@@ -631,6 +631,10 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "cartFuncBtn";
         btn.innerText = "Clear the cart";
+        btn.addEventListener("click", () =>
+        {
+            clearUserCart(2);            
+        });
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -848,6 +852,20 @@ function cartIsEmpty(userId)
     btnDiv.append(btn);
     messageDiv.append(btnDiv);
     mainDiv.append(messageDiv);
+}
+
+//Clear user cart.
+async function clearUserCart(userId)
+{
+    const responce = await fetch(`/api/Cart/Delete/${userId}`,
+    {
+        method: "DELETE"
+    });
+
+    if(responce.ok === true)
+    {
+        await displayUserCart(userId);
+    }
 }
 
 displayUserCart(2);
