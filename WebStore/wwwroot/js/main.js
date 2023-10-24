@@ -516,6 +516,7 @@ async function displayUserCart(userId)
         mainDiv.className = "mainDiv2";
 
         cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
+        await getTotalCartPrice(2);
     }
     else
     {
@@ -606,11 +607,12 @@ function displayCartProduct(data)
         cartFunc.className = "cartFunc";
 
         const cartPrice = document.createElement("div");
-        cartPrice.innerText = "Cart price: 12341";
+        cartPrice.innerText = "Cart price: 0 ₴";
         cartPrice.className = "cartFuncPrice";
+        cartPrice.id = "cartPrice";
 
         const purchasePrice = document.createElement("div");
-        purchasePrice.innerText = "Purchase price: 5678";
+        purchasePrice.innerText = "Purchase price: 0 ₴";
         purchasePrice.className = "cartFuncPrice";
 
         cartFunc.append(cartPrice, purchasePrice);
@@ -653,6 +655,25 @@ function displayCartProduct(data)
     }
 
     return cartItem; 
+}
+
+//Get total cart price.
+async function getTotalCartPrice(userId)
+{
+    const responce = await fetch(`/api/Cart/Price/${userId}`);
+
+    if(responce.ok === true)
+    {
+        var price = await responce.json();
+
+        var cartPrice = document.getElementById("cartPrice");
+
+        cartPrice.innerText = `Cart price: ${price} ₴`;
+    }
+    else
+    {
+        console.log("Error!");
+    }
 }
 
 displayUserCart(2);
