@@ -144,7 +144,7 @@
     border: 2px solid #13276A;
     padding: 10px;
     border-radius: 10px;
-    background-color: #13276A;
+    background-color: rgb(19, 71, 106);
 }
 
 .formGroup
@@ -194,7 +194,8 @@ label
     font-size: 14px;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(122, 201, 243);
+    background-color: rgb(0, 184, 217);
+    color: white;
 }
 
 .submitBtn
@@ -205,8 +206,9 @@ label
     font-size: 14px;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(122, 201, 243);
+    background-color: rgb(0, 184, 217);
     margin-left: 75px;
+    color: white;
 }
 
 .modal 
@@ -464,7 +466,8 @@ label
     border-radius: 5px;
     font-size: 24px;
     cursor: pointer;
-    background-color: rgb(212, 88, 113);
+    background-color: rgb(0, 184, 217);
+    color: white;
 }
 
 .selectAllBtn
@@ -473,12 +476,12 @@ label
     border-radius: 5px;
     font-size: 24px;
     cursor: pointer;
-    background-color: green;
+    background-color: rgb(0, 184, 217);
     color: white;
 }
 
 .buyDiv
-{
+{   
     margin-top: 30px;
     width: auto;
 }

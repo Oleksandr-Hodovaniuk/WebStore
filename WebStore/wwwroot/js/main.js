@@ -12,7 +12,7 @@ logo.addEventListener("click", getAllProducts);
 
 var flag = true;
 
-var productsArr = [1,2,3];
+var productsArr = [];
 
 //Get all products from database.
 async function getAllProducts()
@@ -534,7 +534,7 @@ function displayCartProduct(data)
     const product = document.createElement("div");
     product.setAttribute("data-productId",data.product.id);
     product.className = "product2";
-    product.id = "product" + data.product.id;
+    product.id = data.product.id;
 
     const verticalContainer = document.createElement("div");
     verticalContainer.className = "verticalContainer";
@@ -565,38 +565,17 @@ function displayCartProduct(data)
 
     var buttons = document.createElement("div");
     
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "checkbox"
     checkbox.title = "Confirm the purchase of the product";
-    checkbox.addEventListener("change", function()
+    checkbox.addEventListener("change", () =>
     {
-        const productDiv = document.getElementById(product.id);
-        if(productDiv.style.opacity != 1)
-        {
-            productDiv.style.opacity = 1;
-            productDiv.style.backgroundColor = "white";
-
-            productsArr.push(data.product.id);
-            getTotalPurchasePrice();
-        }
-        else
-        {
-            productDiv.style.opacity = 0.5;
-            productDiv.style.backgroundColor = "rgba(198, 198, 198)";
-
-            const index = productsArr.indexOf(data.product.id);
-            productsArr.splice(index,1);
-            if(productsArr.length > 0)
-            {
-                getTotalPurchasePrice();
-            }      
-            else
-            {
-                const price = document.getElementById("purchasePrice");
-                price.innerText = "Purchase price: 0 ₴";
-            }   
-        }
+        selectProduct(product.id, data);
     });
 
     const removeButton = document.createElement("button");
@@ -612,9 +591,7 @@ function displayCartProduct(data)
     addButton.className = "addBtn";
     addButton.innerText = "+";
     addButton.title = "Increase the quantity of the product";
-
     
-
     buttons.append(checkbox, removeButton, quantity, addButton);
     productFunc.append(buttons);
     cartItem.append(product,productFunc);
@@ -677,6 +654,37 @@ function displayCartProduct(data)
 
     return cartItem; 
 }
+
+//Select & reset product by clicking checkbox.
+function selectProduct(id, data)
+    {
+        const productDiv = document.getElementById(id);   
+        if(productDiv.style.opacity != 1)
+        {
+            productDiv.style.opacity = 1;
+            productDiv.style.backgroundColor = "white";
+
+            productsArr.push(data.product.id);
+            getTotalPurchasePrice();
+        }
+        else
+        {
+            productDiv.style.opacity = 0.5;
+            productDiv.style.backgroundColor = "rgba(198, 198, 198)";
+
+            const index = productsArr.indexOf(data.product.id);
+            productsArr.splice(index,1);
+            if(productsArr.length > 0)
+            {
+                getTotalPurchasePrice();
+            }      
+            else
+            {
+                const price = document.getElementById("purchasePrice");
+                price.innerText = "Purchase price: 0 ₴";
+            }   
+        }
+    }
 
 //Get total cart price.
 async function getTotalCartPrice(userId)
