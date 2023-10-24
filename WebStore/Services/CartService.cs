@@ -131,20 +131,24 @@ namespace WebStore.Services
         }
 
         //Get total selected products price.
-        public async Task<int> GetTotalSelectedPrice(int[] arr)
+        public async Task<int> GetTotalSelectedPrice(int userId, int[] arr)
         {
+
             int price = 0;
 
-            var productList = new List<Product>();
+            var cartList = await context.CartItems.Include(c => c.Product).Where(c => c.UserId == userId).ToListAsync();
 
-            foreach (int i in arr) 
-            {
-                productList.Add(await context.Products.FirstOrDefaultAsync(p => p.Id == i));
-            }
+            var userCartList = new List<CartItem>();
 
-            foreach (var product in productList)
+            foreach (var i in arr)
             {
-                price += product.Price;
+                foreach (var cart in cartList)
+                {
+                    if (cart.ProductId == i)
+                    {
+                        price += cart.Product.Price * cart.Quantity;
+                    }
+                }
             }
 
             return price;

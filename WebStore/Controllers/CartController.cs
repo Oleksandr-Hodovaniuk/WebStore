@@ -94,11 +94,11 @@ namespace WebStore.Controllers
 
         //Get total selected products price.
         [HttpGet("Price2")]
-        public async Task<ActionResult<int>> GetTotalSelectedPrice([FromQuery] int[] arr)
+        public async Task<ActionResult<int>> GetTotalSelectedPrice([FromQuery] int userId, [FromQuery] int[] arr)
         {
             try
             {
-                return Ok(await cartService.GetTotalSelectedPrice(arr));
+                return Ok(await cartService.GetTotalSelectedPrice(userId, arr));
             }
             catch (Exception ex) 
             {
