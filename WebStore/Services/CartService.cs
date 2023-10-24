@@ -33,7 +33,7 @@ namespace WebStore.Services
         //Create CartItemDTO from CartItem.
         private CartItemDTO CartItemToDTO(CartItem item)
         {
-            var dto = new CartItemDTO() 
+            var dto = new CartItemDTO()
             {
                 Product = ProductToDTO(item.Product),
                 Quantity = item.Quantity
@@ -90,7 +90,7 @@ namespace WebStore.Services
                 cartItem.Quantity++;
 
                 await context.SaveChangesAsync();
-            }   
+            }
         }
 
         //Delete one cart item from user's shoping cart.
@@ -128,6 +128,26 @@ namespace WebStore.Services
             }
 
             return prices;
+        }
+
+        //Get total selected products price.
+        public async Task<int> GetTotalSelectedPrice(int[] arr)
+        {
+            int price = 0;
+
+            var productList = new List<Product>();
+
+            foreach (int i in arr) 
+            {
+                productList.Add(await context.Products.FirstOrDefaultAsync(p => p.Id == i));
+            }
+
+            foreach (var product in productList)
+            {
+                price += product.Price;
+            }
+
+            return price;
         }
     }
 }

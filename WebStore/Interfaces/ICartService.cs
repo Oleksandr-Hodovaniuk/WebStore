@@ -18,5 +18,8 @@ namespace WebStore.Interfaces
 
         //Get total cart items price.
         Task<int> GetTotalPrice(int userId);
+
+        //Get total selected products price.
+        Task<int>GetTotalSelectedPrice(int[] productsId);
     }
 }
