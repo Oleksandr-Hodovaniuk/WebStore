@@ -648,6 +648,8 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "cartFuncBtn";
         btn.innerText = "Reset all products";
+        btn.id = "resetProducts";
+        btn.addEventListener("click",resetProducts);
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -709,6 +711,28 @@ async function getTotalPurchasePrice()
     }
 
 
+}
+
+//Reset all selected products.
+function resetProducts()
+{
+    const elem = document.getElementById("resetProducts");
+    
+    const productsList = document.getElementsByClassName("product2");
+
+    Array.from(productsList).forEach(p => 
+    {
+        p.style.opacity = 0.5;
+        p.style.backgroundColor = "rgba(198, 198, 198)";
+    });
+
+    const checkboxList = document.getElementsByClassName("checkbox");
+
+    Array.from(checkboxList).forEach(c =>
+    {
+        c.checked = false;     
+    });
+    console.log(checkboxList);
 }
 
 displayUserCart(2);
