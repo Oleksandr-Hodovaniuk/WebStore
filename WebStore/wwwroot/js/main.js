@@ -12,6 +12,8 @@ logo.addEventListener("click", getAllProducts);
 
 var flag = true;
 
+var productsArr = [];
+
 //Get all products from database.
 async function getAllProducts()
 {
@@ -506,7 +508,6 @@ async function displayUserCart(userId)
     if(responce.ok === true)
     {
         const cart = await responce.json();
-        console.log(cart);
 
         while (mainDiv.firstChild) 
         {
@@ -574,11 +575,26 @@ function displayCartProduct(data)
         {
             productDiv.style.opacity = 1;
             productDiv.style.backgroundColor = "white";
+
+            productsArr.push(data.product.id);
+            getTotalPurchasePrice();
         }
         else
         {
             productDiv.style.opacity = 0.5;
             productDiv.style.backgroundColor = "rgba(198, 198, 198)";
+
+            const index = productsArr.indexOf(data.product.id);
+            productsArr.splice(index,1);
+            if(productsArr.length > 0)
+            {
+                getTotalPurchasePrice();
+            }      
+            else
+            {
+                const price = document.getElementById("purchasePrice");
+                price.innerText = "Purchase price: 0 ₴";
+            }   
         }
     });
 
@@ -614,6 +630,7 @@ function displayCartProduct(data)
         const purchasePrice = document.createElement("div");
         purchasePrice.innerText = "Purchase price: 0 ₴";
         purchasePrice.className = "cartFuncPrice";
+        purchasePrice.id = "purchasePrice";
 
         cartFunc.append(cartPrice, purchasePrice);
         cartItem.append(cartFunc);
@@ -664,16 +681,34 @@ async function getTotalCartPrice(userId)
 
     if(responce.ok === true)
     {
-        var price = await responce.json();
+        const price = await responce.json();
 
-        var cartPrice = document.getElementById("cartPrice");
-
+        const cartPrice = document.getElementById("cartPrice");
         cartPrice.innerText = `Cart price: ${price} ₴`;
     }
     else
     {
         console.log("Error!");
     }
+}
+
+//Get total purchase price.
+async function getTotalPurchasePrice()
+{
+    var arrString = productsArr.join(`&arr=`);
+    
+    const responce = await fetch("/api/Cart/Price2?arr=" + arrString);
+
+    if(responce.ok === true)
+    {
+        const price = await responce.json();
+
+        const purchasePrice = document.getElementById("purchasePrice");
+        purchasePrice.innerText = `Purchase price: ${price} ₴`;
+
+    }
+
+
 }
 
 displayUserCart(2);
