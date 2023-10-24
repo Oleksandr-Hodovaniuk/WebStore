@@ -509,11 +509,18 @@ async function displayUserCart(userId)
     {
         const cart = await responce.json();
 
-        while (mainDiv.firstChild) 
+        if (mainDiv.childElementCount === 0) 
         {
-            mainDiv.removeChild(mainDiv.firstChild);
+            cartIsEmpty(2);
         }
-
+        else
+        {
+            while (mainDiv.firstChild) 
+            {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+        }
+        
         mainDiv.className = "mainDiv2";
 
         cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
@@ -823,6 +830,25 @@ async function removeProductFromCart(userId2, productId2)
     }
 }
 
+//Show message if cart is empty.
+function cartIsEmpty(userId)
+{
+    const messageDiv = document.createElement("div");
+    messageDiv.className = "messageDiv";
+    messageDiv.innerText = "Your cart is empty, add some products to the shopping cart.";
+
+    const btnDiv = document.createElement("div");
+    btnDiv.className = "btnDiv";
+
+    const btn = document.createElement("button");
+    btn.className = "gotToProductsBtn";
+    btn.innerText = "Go to products";
+    btn.addEventListener("click", getAllProducts);
+
+    btnDiv.append(btn);
+    messageDiv.append(btnDiv);
+    mainDiv.append(messageDiv);
+}
 
 displayUserCart(2);
 //getAllProducts();
