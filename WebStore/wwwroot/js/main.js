@@ -710,7 +710,7 @@ async function getTotalPurchasePrice()
 {
     var arrString = productsArr.join(`&arr=`);
     
-    const responce = await fetch("/api/Cart/Price2?arr=" + arrString);
+    const responce = await fetch("/api/Cart/Price2?userId=2&arr=" + arrString);
 
     if(responce.ok === true)
     {
@@ -794,7 +794,7 @@ async function addProductToCart(userId2, productId2)
     }
     else
     {
-    console.log("Error!");
+        console.log("Error!");
     }
 };
 
