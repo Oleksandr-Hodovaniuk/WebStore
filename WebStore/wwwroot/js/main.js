@@ -509,11 +509,18 @@ async function displayUserCart(userId)
     {
         const cart = await responce.json();
 
-        while (mainDiv.firstChild) 
+        if (mainDiv.childElementCount === 0) 
         {
-            mainDiv.removeChild(mainDiv.firstChild);
+            cartIsEmpty(2);
         }
-
+        else
+        {
+            while (mainDiv.firstChild) 
+            {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+        }
+        
         mainDiv.className = "mainDiv2";
 
         cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
@@ -578,6 +585,11 @@ function displayCartProduct(data)
     removeButton.className = "removeBtn";
     removeButton.innerText = "-";
     removeButton.title = "Reduce the quantity of the product";
+    removeButton.addEventListener("click", () =>
+    {
+        removeProductFromCart(2, data.product.id);
+        flag = true;        
+    });
 
     const quantity = document.createElement("span");
     quantity.innerText = data.quantity;
@@ -720,8 +732,6 @@ async function getTotalPurchasePrice()
         purchasePrice.innerText = `Purchase price: ${price} ₴`;
 
     }
-
-
 }
 
 //Reset all selected products.
@@ -796,8 +806,49 @@ async function addProductToCart(userId2, productId2)
     {
         console.log("Error!");
     }
-};
+}
 
+//Remove product from cart.
+async function removeProductFromCart(userId2, productId2)
+{
+    const responce = await fetch(`/api/Cart/Delete/${userId2}/${productId2}`,
+    {
+        method: "DELETE",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify({
+            userId: userId2,
+            productId: productId2,
+        })
+    });
+    if(responce.ok === true)
+    {
+        await displayUserCart(2);
+    }
+    else
+    {
+        console.log("Error!");
+    }
+}
+
+//Show message if cart is empty.
+function cartIsEmpty(userId)
+{
+    const messageDiv = document.createElement("div");
+    messageDiv.className = "messageDiv";
+    messageDiv.innerText = "Your cart is empty, add some products to the shopping cart.";
+
+    const btnDiv = document.createElement("div");
+    btnDiv.className = "btnDiv";
+
+    const btn = document.createElement("button");
+    btn.className = "gotToProductsBtn";
+    btn.innerText = "Go to products";
+    btn.addEventListener("click", getAllProducts);
+
+    btnDiv.append(btn);
+    messageDiv.append(btnDiv);
+    mainDiv.append(messageDiv);
+}
 
 displayUserCart(2);
 //getAllProducts();
