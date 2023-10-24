@@ -12,7 +12,7 @@ logo.addEventListener("click", getAllProducts);
 
 var flag = true;
 
-var productsArr = [];
+var productsArr = [1,2,3];
 
 //Get all products from database.
 async function getAllProducts()
@@ -532,6 +532,7 @@ function displayCartProduct(data)
     cartItem.className = "cartItem";
 
     const product = document.createElement("div");
+    product.setAttribute("data-productId",data.product.id);
     product.className = "product2";
     product.id = "product" + data.product.id;
 
@@ -658,6 +659,7 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "selectAllBtn";
         btn.innerText = "Select all products";
+        btn.addEventListener("click", selectProducts);
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -716,8 +718,6 @@ async function getTotalPurchasePrice()
 //Reset all selected products.
 function resetProducts()
 {
-    console.log(productsArr);
-
     const elem = document.getElementById("resetProducts");
 
     const productsList = document.getElementsByClassName("product2");
@@ -740,6 +740,31 @@ function resetProducts()
     const price = document.getElementById("purchasePrice");
     price.innerText = "Purchase price: 0 ₴";
     
+}
+
+//Select all products.
+async function selectProducts()
+{
+    const productsList = document.getElementsByClassName("product2");
+
+    productsArr.splice(0, productsArr.length);
+
+    Array.from(productsList).forEach(p => 
+    {
+        p.style.opacity = 1;
+        p.style.backgroundColor = "white";
+        productsArr.push(parseInt(p.getAttribute("data-productId")));
+
+    });
+
+    const checkboxList = document.getElementsByClassName("checkbox");
+
+    Array.from(checkboxList).forEach(c =>
+    {
+        c.checked = true;     
+    });
+
+    await getTotalPurchasePrice();
 }
 
 displayUserCart(2);
