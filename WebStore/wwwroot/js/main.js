@@ -716,8 +716,10 @@ async function getTotalPurchasePrice()
 //Reset all selected products.
 function resetProducts()
 {
+    console.log(productsArr);
+
     const elem = document.getElementById("resetProducts");
-    
+
     const productsList = document.getElementsByClassName("product2");
 
     Array.from(productsList).forEach(p => 
@@ -732,9 +734,13 @@ function resetProducts()
     {
         c.checked = false;     
     });
-    console.log(checkboxList);
+
+    productsArr = [];
+    
+    const price = document.getElementById("purchasePrice");
+    price.innerText = "Purchase price: 0 ₴";
+    
 }
 
 displayUserCart(2);
-
 //getAllProducts();
