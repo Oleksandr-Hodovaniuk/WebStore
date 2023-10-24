@@ -565,10 +565,6 @@ function displayCartProduct(data)
 
     var buttons = document.createElement("div");
     
-
-    ////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "checkbox"
@@ -591,6 +587,11 @@ function displayCartProduct(data)
     addButton.className = "addBtn";
     addButton.innerText = "+";
     addButton.title = "Increase the quantity of the product";
+    addButton.addEventListener("click", () => 
+    {
+        addProductToCart(2, data.product.id);
+        flag = true;
+    });
     
     buttons.append(checkbox, removeButton, quantity, addButton);
     productFunc.append(buttons);
@@ -774,6 +775,29 @@ async function selectProducts()
 
     await getTotalPurchasePrice();
 }
+
+//Add product to cart.
+async function addProductToCart(userId2, productId2)
+{
+    const responce = await fetch(`/api/Cart/Add/${userId2}/${productId2}`,
+    {
+        method: "POST",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify({
+            userId: userId2,
+            productId: productId2,
+        })
+    });
+    if(responce.ok === true)
+    {
+        await displayUserCart(2);
+    }
+    else
+    {
+    console.log("Error!");
+    }
+};
+
 
 displayUserCart(2);
 //getAllProducts();
