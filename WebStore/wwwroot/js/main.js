@@ -509,22 +509,22 @@ async function displayUserCart(userId)
     {
         const cart = await responce.json();
 
-        if (mainDiv.childElementCount === 0) 
+        while (mainDiv.firstChild) 
         {
-            cartIsEmpty(2);
-        }
-        else
-        {
-            while (mainDiv.firstChild) 
-            {
-                mainDiv.removeChild(mainDiv.firstChild);
-            }
+            mainDiv.removeChild(mainDiv.firstChild);
         }
         
         mainDiv.className = "mainDiv2";
 
         cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
-        await getTotalCartPrice(2);
+        if(mainDiv.childElementCount != 0)
+        {
+            await getTotalCartPrice(2);
+        }
+        else
+        {
+            cartIsEmpty();
+        }
     }
     else
     {
