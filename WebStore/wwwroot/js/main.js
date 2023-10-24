@@ -531,6 +531,7 @@ function displayCartProduct(data)
 
     const product = document.createElement("div");
     product.className = "product2";
+    product.id = "product" + data.product.id;
 
     const verticalContainer = document.createElement("div");
     verticalContainer.className = "verticalContainer";
@@ -565,6 +566,20 @@ function displayCartProduct(data)
     checkbox.type = "checkbox";
     checkbox.className = "checkbox"
     checkbox.title = "Confirm the purchase of the product";
+    checkbox.addEventListener("change", function()
+    {
+        const productDiv = document.getElementById(product.id);
+        if(productDiv.style.opacity != 1)
+        {
+            productDiv.style.opacity = 1;
+            productDiv.style.backgroundColor = "white";
+        }
+        else
+        {
+            productDiv.style.opacity = 0.5;
+            productDiv.style.backgroundColor = "rgba(198, 198, 198)";
+        }
+    });
 
     const removeButton = document.createElement("button");
     removeButton.className = "removeBtn";
@@ -620,7 +635,7 @@ function displayCartProduct(data)
         btnsDiv = document.createElement("div");
         btnsDiv.className = "btnsDiv";
         var btn = document.createElement("button");
-        btn.className = "cartFuncBtn";
+        btn.className = "selectAllBtn";
         btn.innerText = "Select all products";
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
