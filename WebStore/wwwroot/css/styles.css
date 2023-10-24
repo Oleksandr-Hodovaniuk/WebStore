@@ -326,20 +326,12 @@ label
 {
     display: block;
     margin-top: 75px;
+    padding-bottom: 50px;
 }
 
 .product2
 {   opacity: 0.5;
     background-color: rgba(198, 198, 198);
-    width: 300px;
-    border: 2px solid #13276A;
-    border-radius: 10px;
-}
-
-.product2Checkbox
-{
-    opacity: 1;
-    background-color: white;
     width: 300px;
     border: 2px solid #13276A;
     border-radius: 10px;
@@ -475,9 +467,19 @@ label
     background-color: rgb(212, 88, 113);
 }
 
+.selectAllBtn
+{
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+}
+
 .buyDiv
 {
-    margin-top: 20px;
+    margin-top: 30px;
     width: auto;
 }
 
