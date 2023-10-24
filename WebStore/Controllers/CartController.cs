@@ -91,5 +91,19 @@ namespace WebStore.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //Get total selected products price.
+        [HttpGet("Price2")]
+        public async Task<ActionResult<int>> GetTotalSelectedPrice([FromQuery] int[] arr)
+        {
+            try
+            {
+                return Ok(await cartService.GetTotalSelectedPrice(arr));
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
