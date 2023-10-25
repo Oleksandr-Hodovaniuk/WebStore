@@ -585,7 +585,7 @@ function displayCartProduct(data)
     description.className = "description2";
     verticalContainer.append(description);
 
-    const price = document.createElement("div");
+    const price = document.createElement("div");selectProduct
     price.innerText = data.product.price + " ₴";
     price.className = "price2";
     verticalContainer.append(price);
@@ -687,6 +687,7 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "buyBtn";
         btn.innerText = "Buy selected products";
+        btn.addEventListener("click", purchaseProducts);
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -707,6 +708,7 @@ function selectProduct(id, data)
             productDiv.style.backgroundColor = "white";
 
             productsArr.push(data.product.id);
+            console.log(productsArr);
             getTotalPurchasePrice();
         }
         else
@@ -716,6 +718,7 @@ function selectProduct(id, data)
 
             const index = productsArr.indexOf(data.product.id);
             productsArr.splice(index,1);
+            console.log(productsArr);
             if(productsArr.length > 0)
             {
                 getTotalPurchasePrice();
@@ -751,7 +754,7 @@ async function getTotalPurchasePrice()
 {
     var arrString = productsArr.join(`&arr=`);
     
-    const responce = await fetch("/api/Cart/Price2?userId=2&arr=" + arrString);
+    const responce = await fetch(`/api/Cart/Price2?userId=${user.id}&arr=` + arrString);
 
     if(responce.ok === true)
     {
@@ -760,6 +763,11 @@ async function getTotalPurchasePrice()
         const purchasePrice = document.getElementById("purchasePrice");
         purchasePrice.innerText = `Purchase price: ${price} ₴`;
 
+    }
+    else
+    {
+        const message = await responce.json();
+        console.log(message);
     }
 }
 
@@ -873,7 +881,7 @@ async function removeProductFromCart(userId2, productId2)
     });
     if(responce.ok === true)
     {
-        await displayUserCart(2);
+        await displayUserCart(user.id);
     }
     else
     {
@@ -912,7 +920,51 @@ async function clearUserCart(userId)
     if(responce.ok === true)
     {
         await displayUserCart(userId);
+
+        productsArr = [];
     }
+}
+
+//Purchase selected products.
+async function purchaseProducts()
+{
+    if(productsArr.length > 0)
+    {
+        const responce = await fetch("/api/Email",
+        {
+            method: "POST",
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: user.id,
+                arr: productsArr
+            })
+        });
+
+        if(responce.ok === true)
+        {
+            const message = await responce.json();
+
+            await getTotalPurchasePrice();
+
+            await displayUserCart(user.id);
+
+            createModalWindow(message);
+
+            productsArr = [];
+
+            flag = true;
+        }
+        else
+        {
+            const message = await responce.json();
+            console.log(message);
+        }
+    }
+    else
+    {
+        console.log("Error.");
+    }
+
 }
 
 getAllProducts();
