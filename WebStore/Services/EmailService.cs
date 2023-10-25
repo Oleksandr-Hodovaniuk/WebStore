@@ -25,20 +25,20 @@ namespace WebStore.Services
         }
 
         //Send email to user.
-        public async Task Send(Email email)
+        public async Task Send(PurchasedProducts products)
         {
-            var user = await context.Users.FirstOrDefaultAsync(c => c.Id == email.Id);
+            var user = await context.Users.FirstOrDefaultAsync(c => c.Id == products.UserId);
 
             if (user != null)
             {
-                var price = await cartService.GetTotalSelectedPrice(email.Id, email.Arr);
+                var price = await cartService.GetTotalSelectedPrice(products.UserId, products.ProductsId);
 
                 try
                 {
                     var message = new MimeMessage();
                     message.From.Add(new MailboxAddress("Admin", "mobileshop@gmail.com"));
                     message.To.Add(new MailboxAddress("Client", "s.godovanuk@gmail.com"));
-                    message.Subject = $"Congratulations,{user.Name}, on the successful purchase of a product(s) in our web store! ${price}";
+                    message.Subject = $"Congratulations, {user.Name}, on the successful purchase of our product(s) in our web store! Sum of your purshase: {price} ₴";
 
                     //string htmlContent = File.ReadAllText("email.html");
 
@@ -50,7 +50,7 @@ namespace WebStore.Services
                     using (var client = new SmtpClient())
                     {
                         await client.ConnectAsync("smtp.gmail.com", 587, false);
-                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "qoxh hmoy yaez gfxm");
+                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "ypdn ynsz zogg nywm");
                         await client.SendAsync(message);
                         await client.DisconnectAsync(true);
                     }

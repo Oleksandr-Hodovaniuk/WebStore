@@ -5,6 +5,6 @@ namespace WebStore.Interfaces
 {
     public interface IEmailService
     {
-        Task Send(Email email);
+        Task Send(PurchasedProducts products);
     }
 }

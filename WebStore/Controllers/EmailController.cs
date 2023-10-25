@@ -17,11 +17,11 @@ public class EmailController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Send([FromBody] Email email)
+    public async Task<IActionResult> Send([FromBody] PurchasedProducts products)
     {
         try
         {
-            await emailService.Send(email);
+            await emailService.Send(products);
 
             return Ok("Your purchase was successful, check your gmail.");
         }
