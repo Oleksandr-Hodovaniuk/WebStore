@@ -138,7 +138,6 @@ namespace WebStore.Services
 
             var cartList = await context.CartItems.Include(c => c.Product).Where(c => c.UserId == userId).ToListAsync();
 
-            var userCartList = new List<CartItem>();
 
             foreach (var i in arr)
             {
@@ -147,6 +146,10 @@ namespace WebStore.Services
                     if (cart.ProductId == i)
                     {
                         price += cart.Product.Price * cart.Quantity;
+
+                        context.CartItems.Remove(cart);
+
+                        await context.SaveChangesAsync();
                     }
                 }
             }

@@ -22,6 +22,9 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 //Add ICartService.
 builder.Services.AddScoped<ICartService, CartService>();
 
+//Add IEmailService.
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 //Add validator for RegisterViewModel.
 builder.Services.AddScoped<RegisterViewModelValidator>();
 
