@@ -938,7 +938,7 @@ async function purchaseProducts()
 {
     if(productsArr.length > 0)
     {
-        const responce = await fetch("/api/Cart/Purchase",
+        const responce = await fetch("/api/Email",
         {
             method: "POST",
             headers: {"Accept": "application/json", "Content-Type": "application/json"},
@@ -974,5 +974,4 @@ async function purchaseProducts()
     }
 
 }
-
 getAllProducts();

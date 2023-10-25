@@ -106,20 +106,5 @@ namespace WebStore.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        //Purchase products.a
-        [HttpPost("Purchase")]
-        public async Task<IActionResult> PurchaseProducts([FromBody] PurchasedProducts products)
-        {
-            try
-            {
-                await cartService.PurchaseProducts(products);
-                return Ok("Purchase was successfull.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Purchase error " + ex.Message);
-            }
-        }
     }
 }
