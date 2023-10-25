@@ -602,7 +602,7 @@ function displayCartProduct(data)
     checkbox.title = "Confirm the purchase of the product";
     checkbox.addEventListener("change", () =>
     {
-        selectProduct(product.id, data);
+        selectProduct(data);
     });
 
     const removeButton = document.createElement("button");
@@ -687,7 +687,6 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "buyBtn";
         btn.innerText = "Buy selected products";
-        btn.addEventListener("click", purchaseProducts);
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -699,9 +698,10 @@ function displayCartProduct(data)
 }
 
 //Select & reset product by clicking checkbox.
-function selectProduct(id, data)
+function selectProduct(data)
     {
-        const productDiv = document.getElementById(id);   
+        const productDiv = document.getElementById(data.product.id);   
+
         if(productDiv.style.opacity != 1)
         {
             productDiv.style.opacity = 1;
@@ -709,6 +709,7 @@ function selectProduct(id, data)
 
             productsArr.push(data.product.id);
             console.log(productsArr);
+
             getTotalPurchasePrice();
         }
         else
@@ -719,15 +720,17 @@ function selectProduct(id, data)
             const index = productsArr.indexOf(data.product.id);
             productsArr.splice(index,1);
             console.log(productsArr);
-            if(productsArr.length > 0)
+
+           if(productsArr.length > 0)
             {
                 getTotalPurchasePrice();
-            }      
+            }
             else
             {
-                const price = document.getElementById("purchasePrice");
-                price.innerText = "Purchase price: 0 ₴";
-            }   
+                const purchasePrice = document.getElementById("purchasePrice");
+                purchasePrice.innerText = `Purchase price: 0 ₴`;
+            }
+           
         }
     }
 
@@ -741,6 +744,7 @@ async function getTotalCartPrice(userId)
         const price = await responce.json();
 
         const cartPrice = document.getElementById("cartPrice");
+
         cartPrice.innerText = `Cart price: ${price} ₴`;
     }
     else
@@ -762,7 +766,6 @@ async function getTotalPurchasePrice()
 
         const purchasePrice = document.getElementById("purchasePrice");
         purchasePrice.innerText = `Purchase price: ${price} ₴`;
-
     }
     else
     {
@@ -838,6 +841,8 @@ async function addProductToCart(userId2, productId2)
     if(responce.ok === true)
     {
         await displayUserCart(userId2);
+
+        productsArr = [];
     }
     else
     {
@@ -882,6 +887,8 @@ async function removeProductFromCart(userId2, productId2)
     if(responce.ok === true)
     {
         await displayUserCart(user.id);
+
+        productsArr = [];
     }
     else
     {
@@ -923,48 +930,6 @@ async function clearUserCart(userId)
 
         productsArr = [];
     }
-}
-
-//Purchase selected products.
-async function purchaseProducts()
-{
-    if(productsArr.length > 0)
-    {
-        const responce = await fetch("/api/Email",
-        {
-            method: "POST",
-            headers: {"Accept": "application/json", "Content-Type": "application/json"},
-            body: JSON.stringify({
-                id: user.id,
-                arr: productsArr
-            })
-        });
-
-        if(responce.ok === true)
-        {
-            const message = await responce.json();
-
-            await getTotalPurchasePrice();
-
-            await displayUserCart(user.id);
-
-            createModalWindow(message);
-
-            productsArr = [];
-
-            flag = true;
-        }
-        else
-        {
-            const message = await responce.json();
-            console.log(message);
-        }
-    }
-    else
-    {
-        console.log("Error.");
-    }
-
 }
 
 getAllProducts();

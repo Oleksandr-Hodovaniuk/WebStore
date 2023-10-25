@@ -7,6 +7,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using WebStore.Models;
 
 namespace WebStore.Services
 {
@@ -24,14 +25,13 @@ namespace WebStore.Services
         }
 
         //Send email to user.
-        public async Task Send(int userId, int[] arr)
+        public async Task Send(Email email)
         {
-            var user = await context.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            var user = await context.Users.FirstOrDefaultAsync(c => c.Id == email.Id);
 
             if (user != null)
             {
-                var price = await cartService.GetTotalSelectedPrice(userId, arr);
-
+                var price = await cartService.GetTotalSelectedPrice(email.Id, email.Arr);
 
                 try
                 {
@@ -50,7 +50,7 @@ namespace WebStore.Services
                     using (var client = new SmtpClient())
                     {
                         await client.ConnectAsync("smtp.gmail.com", 587, false);
-                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "zohf wnzh ztsu dzqr");
+                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "qoxh hmoy yaez gfxm");
                         await client.SendAsync(message);
                         await client.DisconnectAsync(true);
                     }

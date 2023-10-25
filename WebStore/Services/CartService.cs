@@ -146,10 +146,6 @@ namespace WebStore.Services
                     if (cart.ProductId == i)
                     {
                         price += cart.Product.Price * cart.Quantity;
-
-                        context.CartItems.Remove(cart);
-
-                        await context.SaveChangesAsync();
                     }
                 }
             }
