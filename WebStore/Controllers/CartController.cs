@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mobileshop.Models;
 using WebStore.Interfaces;
+using WebStore.Models;
 using WebStore.Models.DTOs;
 
 namespace WebStore.Controllers
@@ -103,6 +104,21 @@ namespace WebStore.Controllers
             catch (Exception ex) 
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //Purchase products.a
+        [HttpPost("Purchase")]
+        public async Task<IActionResult> PurchaseProducts([FromBody] PurchasedProducts products)
+        {
+            try
+            {
+                await cartService.PurchaseProducts(products);
+                return Ok("Purchase was successfull.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Purchase error " + ex.Message);
             }
         }
     }

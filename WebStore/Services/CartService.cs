@@ -2,6 +2,7 @@
 using Mobileshop.Models;
 using WebStore.Data;
 using WebStore.Interfaces;
+using WebStore.Models;
 using WebStore.Models.DTOs;
 
 namespace WebStore.Services
@@ -151,6 +152,29 @@ namespace WebStore.Services
             }
 
             return price;
+        }
+
+        //Purchase products.
+        public async Task PurchaseProducts(PurchasedProducts products)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == products.UserId);
+
+            if (user != null)
+            {
+                var cartItemsList = await context.CartItems.ToListAsync();
+
+                foreach (var id in products.ProductsId)
+                {
+                    foreach (var cartItem in cartItemsList)
+                    {
+                        if (cartItem.ProductId == id)
+                        {
+                            context.CartItems.Remove(cartItem);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
         }
     }
 }
