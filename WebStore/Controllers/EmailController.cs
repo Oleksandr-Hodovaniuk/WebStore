@@ -3,6 +3,7 @@ using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Crypto.Macs;
 using WebStore.Interfaces;
+using WebStore.Models;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,11 +17,11 @@ public class EmailController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Send([FromQuery] int useId, [FromQuery] int[] arr)
+    public async Task<IActionResult> Send([FromBody] Email email)
     {
         try
         {
-            await emailService.Send(useId, arr);
+            await emailService.Send(email);
 
             return Ok("Your purchase was successful, check your gmail.");
         }

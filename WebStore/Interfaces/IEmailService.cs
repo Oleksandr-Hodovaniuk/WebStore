@@ -1,9 +1,10 @@
 ﻿using System.Net.Mail;
+using WebStore.Models;
 
 namespace WebStore.Interfaces
 {
     public interface IEmailService
     {
-        Task Send(int userId, int[] arr);
+        Task Send(Email email);
     }
 }
