@@ -38,7 +38,8 @@ namespace WebStore.Services
                     var message = new MimeMessage();
                     message.From.Add(new MailboxAddress("Admin", "mobileshop@gmail.com"));
                     message.To.Add(new MailboxAddress("Client", "s.godovanuk@gmail.com"));
-                    message.Subject = $"Congratulations, {user.Name}, on the successful purchase of our product(s) in our web store! Sum of your purshase: {price} ₴";
+                    message.Subject = $"Congratulations, {user.Name}, on the successful purchase of our product(s) " +
+                        $"in our web store! Your products count: {products.ProductsId.Length}; Sum of your purshase: {price} ₴";
 
                     //string htmlContent = File.ReadAllText("email.html");
 
@@ -50,10 +51,12 @@ namespace WebStore.Services
                     using (var client = new SmtpClient())
                     {
                         await client.ConnectAsync("smtp.gmail.com", 587, false);
-                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "ypdn ynsz zogg nywm");
+                        await client.AuthenticateAsync("s.godovanuk@gmail.com", "gzct vplc ntqe ffsb");
                         await client.SendAsync(message);
                         await client.DisconnectAsync(true);
                     }
+
+                    await cartService.PurchaseProducts(products);
 
                     Console.WriteLine("Email sent successfully.");
                 }
