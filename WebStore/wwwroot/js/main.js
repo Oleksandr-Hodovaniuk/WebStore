@@ -687,6 +687,7 @@ function displayCartProduct(data)
         var btn = document.createElement("button");
         btn.className = "buyBtn";
         btn.innerText = "Buy selected products";
+        btn.addEventListener("click", purchaseProducts);
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
 
@@ -930,6 +931,48 @@ async function clearUserCart(userId)
 
         productsArr = [];
     }
+}
+
+//Purchase selected products.
+async function purchaseProducts()
+{
+    if(productsArr.length > 0)
+    {
+        const responce = await fetch("/api/Cart/Purchase",
+        {
+            method: "POST",
+            headers: {"Accept": "application/json", "Content-Type": "application/json"},
+            body: JSON.stringify({
+                userId: user.id,
+                productsId: productsArr
+            })
+        });
+
+        if(responce.ok === true)
+        {
+            const message = await responce.json();
+
+            await getTotalPurchasePrice();
+
+            await displayUserCart(user.id);
+
+            createModalWindow(message);
+
+            productsArr = [];
+
+            flag = true;
+        }
+        else
+        {
+            const message = await responce.json();
+            console.log(message);
+        }
+    }
+    else
+    {
+        createModalWindow("Select product(s) to buy.");
+    }
+
 }
 
 getAllProducts();
