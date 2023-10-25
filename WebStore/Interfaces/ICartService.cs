@@ -1,4 +1,5 @@
-﻿using WebStore.Models.DTOs;
+﻿using WebStore.Models;
+using WebStore.Models.DTOs;
 
 namespace WebStore.Interfaces
 {
@@ -21,5 +22,8 @@ namespace WebStore.Interfaces
 
         //Get total selected products price.
         Task<int>GetTotalSelectedPrice(int userId, int[] productsId);
+
+        //Purchase products.
+        Task PurchaseProducts(PurchasedProducts products);
     }
 }
