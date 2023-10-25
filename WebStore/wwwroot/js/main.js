@@ -10,6 +10,9 @@ logInBtn.addEventListener("click", createLogInForm);
 const logo = document.getElementById("logo");
 logo.addEventListener("click", getAllProducts);
 
+const cartIcon = document.getElementById("cartIcon");
+cartIcon.addEventListener("click", createLogInForm);
+
 var flag = true;
 
 var productsArr = [];
@@ -43,6 +46,7 @@ function displayProduct(data)
 {
     const product = document.createElement("div");
     product.className = "product";
+    product.id = data.id;
 
     const verticalContainer = document.createElement("div");
     verticalContainer.className = "verticalContainer";
@@ -73,6 +77,17 @@ function displayProduct(data)
     const addBtn = document.createElement("button");
     addBtn.innerText = "Add to cart";
     addBtn.className = "add";
+    addBtn.title = "Add product to shopping cart";
+    addBtn.addEventListener("click", createLogInForm);
+    if(user != null)
+    {
+        addBtn.removeEventListener("click", createLogInForm);
+        addBtn.addEventListener("click", () => 
+        {
+            addProductToCart2(user.id, product.id);
+        });
+    }
+    
     horizontalContainer.append(addBtn);
     
     product.append(verticalContainer, horizontalContainer);
@@ -414,6 +429,12 @@ async function logInUser(userName, userPassword)
 
         addProfile();
 
+        cartIcon.removeEventListener("click", createLogInForm);
+        cartIcon.addEventListener("click", () =>
+        {
+            displayUserCart(user.id);
+        });
+
         createModalWindow("You was successfully logged in");
     }
     else if(responce.status === 400)
@@ -516,10 +537,13 @@ async function displayUserCart(userId)
         
         mainDiv.className = "mainDiv2";
 
-        cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)))
+        flag = true;
+
+        cart.forEach(cartItem => mainDiv.append(displayCartProduct(cartItem)));
+
         if(mainDiv.childElementCount != 0)
         {
-            await getTotalCartPrice(2);
+            await getTotalCartPrice(userId);
         }
         else
         {
@@ -587,7 +611,7 @@ function displayCartProduct(data)
     removeButton.title = "Reduce the quantity of the product";
     removeButton.addEventListener("click", () =>
     {
-        removeProductFromCart(2, data.product.id);
+        removeProductFromCart(user.id, data.product.id);
         flag = true;        
     });
 
@@ -601,13 +625,14 @@ function displayCartProduct(data)
     addButton.title = "Increase the quantity of the product";
     addButton.addEventListener("click", () => 
     {
-        addProductToCart(2, data.product.id);
+        addProductToCart(user.id, data.product.id);
         flag = true;
     });
     
     buttons.append(checkbox, removeButton, quantity, addButton);
     productFunc.append(buttons);
     cartItem.append(product,productFunc);
+
     if(flag == true)
     {
         const cartFunc = document.createElement("div");
@@ -633,7 +658,7 @@ function displayCartProduct(data)
         btn.innerText = "Clear the cart";
         btn.addEventListener("click", () =>
         {
-            clearUserCart(2);            
+            clearUserCart(user.id);            
         });
         btnsDiv.append(btn);
         cartFunc.append(btnsDiv);
@@ -790,7 +815,7 @@ async function selectProducts()
     await getTotalPurchasePrice();
 }
 
-//Add product to cart.
+//Add product to cart and call displayUserCart method.
 async function addProductToCart(userId2, productId2)
 {
     const responce = await fetch(`/api/Cart/Add/${userId2}/${productId2}`,
@@ -804,7 +829,29 @@ async function addProductToCart(userId2, productId2)
     });
     if(responce.ok === true)
     {
-        await displayUserCart(2);
+        await displayUserCart(userId2);
+    }
+    else
+    {
+        console.log("Error!");
+    }
+}
+
+////Add product to cart.
+async function addProductToCart2(userId2, productId2)
+{
+    const responce = await fetch(`/api/Cart/Add/${userId2}/${productId2}`,
+    {
+        method: "POST",
+        headers: {"Accept": "application/json", "Content-Type": "application/json"},
+        body: JSON.stringify({
+            userId: userId2,
+            productId: productId2,
+        })
+    });
+    if(responce.ok === true)
+    {
+
     }
     else
     {
@@ -868,5 +915,4 @@ async function clearUserCart(userId)
     }
 }
 
-displayUserCart(2);
-//getAllProducts();
+getAllProducts();
